@@ -51,11 +51,15 @@ values="23456789TJQKA"
 def card(mycard):
     val = mycard[:-1]
     suit = suits[mycard[-1]]
-    return Div(
+    return Div(       
         Div(val, cls="top-left"),
         Div(suit, cls="suit"),
         Div(val, cls="bottom-right"),
-        cls="card "+colors[mycard[-1]])
+        cls="card "+colors[mycard[-1]],
+        hx_get="/card_click",
+        hx_trigger="click",
+                    hx_swap="outerHTML",
+        hx_target="this" )
 
 app = FastHTML(hdrs=(picolink,css))
 # app = FastHTML(hdrs=(css))
@@ -64,6 +68,10 @@ app = FastHTML(hdrs=(picolink,css))
 # @app.get("/")
 # def home():
 #     return Title("Test"),card("2H")
+
+@app.get("/card_click")
+def card_click(request):
+    return ""
 
 @app.get("/")
 def home():
